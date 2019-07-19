@@ -1,0 +1,22 @@
+version: '3'
+services:
+  contributions-importer-for-github:
+    build: .
+    image: contributions-importer-for-github
+    volumes:
+      - ./:/contributions-importer-for-github
+      - /path/to/from-repo:/from-repo
+      - /path/to/to-repo:/to-repo
+    ports:
+      - "8888:8888"
+    working_dir: /contributions-importer-for-github
+    command:
+      - /bin/bash
+      - -c
+      - |
+        git config --global user.email mshanm@gmail.com
+        git config --global user.name "Muthu Shanmugam"
+        python ./run_script.py
+        cd /to-repo
+        git status
+        tail -f /dev/null
